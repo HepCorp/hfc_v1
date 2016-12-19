@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<bean id="dataSourceSQLServer-test" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+		<property name="url" value="jdbc:sqlserver://hfc-v1-test.cqbhcjrreapb.ap-northeast-2.rds.amazonaws.com:1433;databaseName=hfc-v1" />
+		<property name="username" value="hfc_conn" />
+		<property name="password" value="KPzq!ddp6vPGQU" />
+	</bean>
+
+	<bean id="dataSourceSQLServer" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+		<property name="url" value="jdbc:sqlserver://hfc-v1.cqbhcjrreapb.ap-northeast-2.rds.amazonaws.com:1433;databaseName=hfc-v1" />
+		<property name="username" value="hfc_conn" />
+		<property name="password" value="KPzq!ddp6vPGQU" />
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSourceSQLServer-test" />
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceSQLServer-test" />
+		<property name="configLocation" value="/WEB-INF/spring/mybatis-config.xml" />
+	</bean>
+	
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	
+</beans>
+
