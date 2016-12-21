@@ -33,6 +33,12 @@ public class ParamValidatChk {
 		}
 		return false;
 	}
+	public boolean isNull(Object param){
+		if (param == null){
+			return true;
+		}
+		return false;
+	}
 	public String getParam(String param){
 		if (isEmpty(param)==false){
 			param = param.trim();
