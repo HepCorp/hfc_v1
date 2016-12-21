@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.MemberMapper">
+<mapper namespace="memberMapper">
  
     <!-- <resultMap id="userInfoMap" type="userVo">
         <result column="USERID" property="userId" jdbcType="VARCHAR" javaType="string"/>
@@ -25,4 +25,27 @@
         )}
     </select> -->
 
+	<select id="memberSelect" parameterType="Integer" resultType="memberVO">
+	<![CDATA[
+		SELECT A.MEMBER_NO
+		     , A.USER_NAME
+		     , A.USER_PWD
+		     , A.MONEY
+		     , A.IP
+		     , A.INPUT_DT
+		     , A.LAST_DT
+		  FROM HFC.HFC_MEMBER A
+		 WHERE A.MEMBER_NO = ${member_no}
+	]]>
+	</select>
+	
+	<select id="loginSelect" parameterType="String" resultType="memberVO">
+	<![CDATA[
+		SELECT TOP 1
+		       A.MEMBER_NO
+		     , A.USER_PWD
+		  FROM HFC.HFC_MEMBER A
+		 WHERE A.USER_EMAIL = ${user_email}
+	]]>
+	</select>
 </mapper>

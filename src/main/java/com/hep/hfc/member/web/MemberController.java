@@ -1,4 +1,4 @@
-package member.web;
+package com.hep.hfc.member.web;
 
 import org.springframework.stereotype.Controller;
 

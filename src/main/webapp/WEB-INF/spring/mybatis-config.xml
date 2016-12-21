@@ -2,7 +2,7 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <!-- <typeAlias alias="userVo" type="spring.sample.model.User"/> -->
+    	<typeAlias type="member.MemberVO" alias="memberVO" />
     </typeAliases>
  
     <typeHandlers>
@@ -10,8 +10,8 @@
     </typeHandlers>
  
     <mappers>
-        <!-- <mapper resource="mappers/MemberMapper.xml"/>
-        <package name="spring.sample.mapper"/>
+        <mapper resource="sqlmap/member.xml" />
+        <!-- <package name="spring.sample.mapper"/>
         <mapper class="spring.sample.mapper.MemberMapper"/>
         <mapper url="file://mappers/MemberMapper.xml"/> -->
     </mappers>
