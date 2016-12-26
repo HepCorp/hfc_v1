@@ -3,6 +3,7 @@
 <configuration>
     <typeAliases>
     	<typeAlias type="com.hep.hfc.member.MemberVO" alias="memberVO" />
+    	<typeAlias type="com.hep.hfc.game.StageVO" alias="stageVO" />
     </typeAliases>
  
     <typeHandlers>
@@ -11,6 +12,7 @@
  
     <mappers>
         <mapper resource="sqlmap/member.xml" />
+        <mapper resource="sqlmap/game.xml" />
         <!-- <package name="spring.sample.mapper"/>
         <mapper class="spring.sample.mapper.MemberMapper"/>
         <mapper url="file://mappers/MemberMapper.xml"/> -->

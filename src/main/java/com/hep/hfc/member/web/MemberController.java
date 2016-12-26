@@ -63,7 +63,7 @@ public class MemberController {
 		return "redirect:/game/index.do";
 	}
 	
-	@RequestMapping(value="/")
+	@RequestMapping(value="/logout.do")
 	public String logout(HttpSession session){
 		session.removeAttribute("userVO");
 		session.invalidate();

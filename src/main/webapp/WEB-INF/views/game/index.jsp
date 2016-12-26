@@ -17,7 +17,7 @@
             <ul class="nav">
                 <li>남은엽전 : ${memberVO.money } 냥</li>
                 <li>${memberVO.user_name } 님</li>
-                <li><a href="<c:url value="/logout.do" />" title="로그아웃" >로그아웃</a></li>
+                <li><a href="<c:url value="/logout.do" />" title="로그아웃" onclick="return logout();">로그아웃</a></li>
             </ul>
         </div>
     </header>
@@ -29,7 +29,43 @@
             <!-- gameWrap(윷놀이판) -->
             <article class="gameWrap">
                 <div class="stage">
-                    <div id="itemStart" class="bigC"><a href="">START</a></div>
+               	<c:if test="${stageList != null }">
+               		<div id="itemStart" class="bigC"><a href="">START</a></div>
+               	<c:set var="now" value="${0 }" />
+               	<c:set var="nowPlay" value="" />
+               	<c:forEach items="${stageList }" var="stage">
+               		<!-- class 지정 -->
+               		<c:set var="clas" value="smallC" />
+               		<c:set var="stat" value="" />
+               		<c:choose>
+               			<c:when test="${stage.qna_no == 0 }"><c:set var="stat" value="" /></c:when>
+               			<c:when test="${stage.qna_no != 0 && stage.answer_yn == true }">
+	               			<c:if test="${stage.hint_log_cnt > 0 }"><c:set var="stat" value="useHint" /></c:if>
+	               			<c:if test="${stage.hint_log_cnt == 0}"><c:set var="stat" value="notUseHint" /></c:if>
+               			</c:when>
+               			<c:when test="${stage.qna_no != 0 && stage.answer_yn == false && now == 0 }">
+               				<c:set var="stat" value="nowPlay" />
+	               			<c:set var="now" value="${now + 1 }" />
+	               			<c:set var="nowPlay" value="${stage.stage_nm }" />
+               			</c:when>
+               		</c:choose>
+               		
+               		<c:if test="${fn:startsWith(stage.stage_nm, 'Test')}">
+               			<c:set var="clas" value="bigC"></c:set>
+               		</c:if>
+               		<!-- //class 지정 -->
+               		
+               		<div id="item${stage.stage_nm }" class="${clas } ${stat }">
+               		<c:if test="${stage.qna_no != 0 }">
+               			<a href="">${stage.stage_nm }</a>
+               		</c:if>
+               		<c:if test="${stage.qna_no == 0 }">
+               			${stage.stage_nm }
+               		</c:if>	
+               		</div>
+               	</c:forEach>
+               	</c:if>
+                    <!-- <div id="itemStart" class="bigC"><a href="">START</a></div>
                     <div id="item1-1" class="smallC"><a href="">1-1</a></div>
                     <div id="item1-2" class="smallC"><a href="">1-2</a></div>
                     <div id="item1-3" class="smallC"><a href="">1-3</a></div>
@@ -57,11 +93,11 @@
                     <div id="item7-1" class="smallC"><a href="">7-1</a></div>
                     <div id="item7-2" class="smallC"><a href="">7-2</a></div>
                     <div id="item8-1" class="smallC"><a href="">8-1</a></div>
-                    <div id="item8-2" class="smallC"><a href="">8-2</a></div>
-                    <p id="basic">BASIC</p>
-                    <p id="system">SYSTEM</p>
-                    <p id="network">NETWORK</p>
-                    <p id="web">WEB</p>
+                    <div id="item8-2" class="smallC"><a href="">8-2</a></div> -->
+                    <p id="basic"><img src="/resources/images/yut-one.png" alt="윷 한개 이미지">BASIC</p>
+                    <p id="system"><img src="/resources/images/yut-one.png" alt="윷 한개 이미지">SYSTEM</p>
+                    <p id="network"><img src="/resources/images/yut-one.png" alt="윷 한개 이미지">NETWORK</p>
+                    <p id="web"><img src="/resources/images/yut-one.png" alt="윷 한개 이미지">WEB</p>
                 </div>
             </article>
             <!-- //gameWrap(윷놀이판) -->
@@ -88,8 +124,8 @@
             <!-- //categoryBox(범주) -->
         </div>
         <!-- startBtn(슬라이드 show/hide 버튼) -->
-        <aside class="startBtn">
-            <a href="">1-1<br>START</a>
+        <aside>
+            <a href="">${nowPlay }<br>START</a>
         </aside>
         <!-- //startBtn(슬라이드 show/hide 버튼) -->
 
@@ -101,20 +137,30 @@
                     <article class="questionBox">
                         <h3>Q</h3>
                         <div id="question">
-                            <span>
+                            <p>
                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry?
-                            </span>
+                            </p>
                         </div>
                     </article>
                     <article class="hintBox">
                         <form>
-                            <input type="button" id="hintBtn01" value="힌트1 사용 3냥 CLICK!">
+                            <fieldset>
+                                <legend>힌트 버튼 1</legend>
+                                <label for="hintBtn01">
+                                    <input type="button" id="hintBtn01" value="힌트1 사용 3냥 CLICK!">
+                                </label>
+                            </fieldset>
                         </form>
                         <div id="hint01">
                             <p>1. Vivamus luctus lectus quis molestie pretium.</p>
                         </div>
                         <form>
-                            <input type="button" id="hintBtn02" value="힌트2 사용 3냥 CLICK!">
+                            <fieldset>
+                                <legend>힌트 버튼 2</legend>
+                                <label for="hintBtn02">
+                                    <input type="button" id="hintBtn02" value="힌트2 사용 3냥 CLICK!">
+                                </label>
+                            </fieldset>
                         </form>
                         <div id="hint02">
                             <p>2. Donec dignissim libero et ex laoreet auctor.</p>
@@ -125,16 +171,34 @@
                         <form>
                             <fieldset>
                                 <legend>답</legend>
-                            <label for="answer">
-                                <textarea name="answer" id="answer" cols="30" rows="3"></textarea>
-                            </label>
+                                <label for="answer">
+                                    <textarea name="answer" id="answer" cols="30" rows="3"></textarea>
+                                </label>
+                            </fieldset>
+                            <fieldset>
+                                <legend>답 제출</legend>
+                                <label for="send">
+                                    <input type="submit" name="send" id="send" value="답 제출" onclick="">
+                                </label>
                             </fieldset>
                         </form>
                     </article>
+
                 </div>
                 <article class="fileDown">
-                    <p>attach.txt</p>
-                    <a href="">Download</a>
+                    <div id="fileBtn">
+                        <div id="downDetail">
+                            <span>attach.txt</span>
+                            <form>
+                                <fieldset>
+                                    <legend>파일 다운로드</legend>
+                                    <label for="download">
+                                        <input type="button" name="download" id="download" value="Download">
+                                    </label>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
                 </article>
             </section>
         </article>
