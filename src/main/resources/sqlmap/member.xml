@@ -42,8 +42,8 @@
 	
 	<insert id="logInsert" parameterType="memberVO">
 	<![CDATA[
-		INSERT INTO HFC.HFC_LOGIN_LOG (MEMBER_NO, IP)
-		VALUES (#{member_no}, #{ip})
+		INSERT INTO HFC.HFC_MONEY_LOG (REFERENCE_NO, TABLE_NM, MONEY, IP)
+		VALUES (#{member_no}, 'HFC_MEMBER', 1, #{ip})
 	]]>
 	</insert>
 	
@@ -58,8 +58,9 @@
 	<select id="logExists" parameterType="int" resultType="int">
 	<![CDATA[
 		SELECT COUNT(*) AS COUNT
-		  FROM HFC.HFC_LOGIN_LOG A
-		 WHERE MEMBER_NO = #{member_no}
+		  FROM HFC.HFC_MONEY_LOG A
+		 WHERE REFERENCE_NO = #{member_no}
+		   AND TABLE_NM = 'HFC_MEMBER'
 		   AND DATEDIFF(DD, INPUT_DT, GETDATE()) = 0
 	]]>
 	</select>

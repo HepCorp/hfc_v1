@@ -27,6 +27,11 @@ public class MemberController {
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public String main (){
+		return "redirect:/index.do";
+	}
+	
+	@RequestMapping(value="/index.do", method=RequestMethod.GET)
+	public String index(){
 		return "/index";
 	}
 	
@@ -41,16 +46,17 @@ public class MemberController {
 		if (result.hasErrors()) {
 			return "/index";
 		}
-		int count = service.logExists(memberVO.getMember_no());
 		memberVO.setIp(request.getRemoteAddr());
-		service.logInsert(memberVO);
+		
+		//하루에 한번만 적립
+		int count = service.logExists(memberVO.getMember_no());
 		if (count == 0){
+			service.logInsert(memberVO);
 			service.moneyUpdate(memberVO.getMember_no());
 			memberVO.setMoney(memberVO.getMoney()+1);
 		}
-		System.out.println(memberVO.toString());
 		session.setAttribute("memberVO", memberVO);
 		
-		return "redirect:/";
+		return "redirect:/game/index.do";
 	}
 }

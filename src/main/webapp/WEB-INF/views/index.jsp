@@ -3,8 +3,8 @@
 <c:set var="browserTitle" value="HFC-해커인증시스템" />
 <c:set var="menuTitle" value="로그인" />
 <c:set var="fileName" value="index.jsp" />
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
 <%@ include file="/resources/include/header.jsp"%>
 <script type="text/javascript" charset="UTF-8" src="/resources/js/index.js"></script>
@@ -32,7 +32,7 @@ function FormChkModule(f){
 }
 </script>
 </head>
-<body>${memberVO.user_name }
+<body>
     <section class="contentsWrap">
         <div class="contents">
             <div class="loginWrap">
