@@ -31,7 +31,10 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/index.do", method=RequestMethod.GET)
-	public String index(){
+	public String index(HttpSession session){
+		session.removeAttribute("userVO");
+		session.invalidate();
+
 		return "/index";
 	}
 	
@@ -59,4 +62,13 @@ public class MemberController {
 		
 		return "redirect:/game/index.do";
 	}
+	
+	@RequestMapping(value="/")
+	public String logout(HttpSession session){
+		session.removeAttribute("userVO");
+		session.invalidate();
+
+		return "redirect:/index.do";
+	}
+
 }
