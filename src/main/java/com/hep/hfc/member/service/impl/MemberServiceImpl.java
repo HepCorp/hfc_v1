@@ -15,13 +15,24 @@ public class MemberServiceImpl implements MemberService{
 	MemberDao dao;
 	
 	@Override
-	public MemberVO memberSelect(int member_no) {
-		return dao.memberSelect(member_no);
+	public MemberVO loginSelect(String user_email) {
+		return dao.loginSelect(user_email);
 	}
 
 	@Override
-	public MemberVO loginSelect(String user_email) {
-		return dao.loginSelect(user_email);
+	public void logInsert(MemberVO vo) {
+		dao.logInsert(vo);
+		
+	}
+
+	@Override
+	public void moneyUpdate(int member_no) {
+		dao.moneyUpdate(member_no);
+	}
+
+	@Override
+	public int logExists(int member_no) {
+		return dao.logExists(member_no);
 	}
 
 }

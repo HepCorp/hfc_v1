@@ -1,6 +1,7 @@
 package com.hep.hfc.member.web;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -13,7 +14,7 @@ import com.hep.hfc.member.service.MemberService;
 @Component
 public class LoginValidation extends ParamValidatChk implements Validator {
 
-	@Resource(name="MemberService")
+	@Resource(name="memberService")
 	MemberService service;
 	
 	@Override
@@ -37,28 +38,41 @@ public class LoginValidation extends ParamValidatChk implements Validator {
 			input_pwd = getParam(inVO.getUser_pwd());
 		}
 		if (isEmpty(input_email)){
-			err.rejectValue("user_email", "이메일을 입력해 주세요.");
+			err.rejectValue("user_email", "field.required.email");
+			return;
+		}
+		if (!pattern("email", input_email)){
+			err.rejectValue("user_email", "field.error.pattern.email");
+			return;
 		}
 		if (isEmpty(input_pwd)){
-			err.rejectValue("user_pwd", "비밀번호를 입력해 주세요.");
+			err.rejectValue("user_pwd", "field.required.password");
+			return;
 		}
-		
 		MemberVO outVO = service.loginSelect(input_email);
+		
 		if (isNull(outVO)){
-			err.rejectValue("user_email", "이메일을 잘못 입력하셨습니다.");
-		} else {
-			outVO.setUser_email(input_email);
-			int member_no = outVO.getMember_no();
-			String user_pwd = outVO.getUser_pwd();
-			
-			if (isNull(member_no) || member_no == 0 || isEmpty(user_pwd)){
-				err.rejectValue("user_email", "이메일을 잘못 입력하셨습니다.");
-			} else {
-				if (input_pwd != user_pwd){
-					err.rejectValue("user_pwd", "비밀번호를 잘못 입력하셨습니다.");
-				}
-			}
+			err.rejectValue("user_email", "field.error.account");
+			return;
 		}
+		int member_no = outVO.getMember_no();
+		String user_pwd = outVO.getUser_pwd();
+		
+		if (isNull(member_no) || member_no == 0 || isEmpty(user_pwd)){
+			err.rejectValue("user_email", "field.error.account");
+			return;
+		}
+		if (!input_pwd.equals(user_pwd)){
+			err.rejectValue("user_pwd", "field.error.password"); 
+			return;
+		}
+		inVO.setMember_no(outVO.getMember_no());
+		inVO.setUser_name(outVO.getUser_name());
+		inVO.setMoney(outVO.getMoney());
+ 		inVO.setIp(outVO.getIp());
+		inVO.setInput_dt(outVO.getInput_dt());
+		inVO.setLast_dt(outVO.getLast_dt());
 	}
 }
+
 

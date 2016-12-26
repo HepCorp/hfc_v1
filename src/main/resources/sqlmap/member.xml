@@ -25,9 +25,10 @@
         )}
     </select> -->
 
-	<select id="memberSelect" parameterType="Integer" resultType="memberVO">
+	<select id="loginSelect" parameterType="string" resultType="memberVO">
 	<![CDATA[
-		SELECT A.MEMBER_NO
+		SELECT TOP 1
+		       A.MEMBER_NO
 		     , A.USER_NAME
 		     , A.USER_PWD
 		     , A.MONEY
@@ -35,17 +36,31 @@
 		     , A.INPUT_DT
 		     , A.LAST_DT
 		  FROM HFC.HFC_MEMBER A
-		 WHERE A.MEMBER_NO = ${member_no}
+		 WHERE A.USER_EMAIL = #{user_email}
 	]]>
 	</select>
 	
-	<select id="loginSelect" parameterType="String" resultType="memberVO">
+	<insert id="logInsert" parameterType="memberVO">
 	<![CDATA[
-		SELECT TOP 1
-		       A.MEMBER_NO
-		     , A.USER_PWD
-		  FROM HFC.HFC_MEMBER A
-		 WHERE A.USER_EMAIL = ${user_email}
+		INSERT INTO HFC.HFC_LOGIN_LOG (MEMBER_NO, IP)
+		VALUES (#{member_no}, #{ip})
+	]]>
+	</insert>
+	
+	<update id="moneyUpdate" parameterType="int">
+	<![CDATA[
+		UPDATE HFC.HFC_MEMBER SET 
+		       MONEY = MONEY + 1
+		 WHERE MEMBER_NO = #{member_no}
+	]]>
+	</update>
+	
+	<select id="logExists" parameterType="int" resultType="int">
+	<![CDATA[
+		SELECT COUNT(*) AS COUNT
+		  FROM HFC.HFC_LOGIN_LOG A
+		 WHERE MEMBER_NO = #{member_no}
+		   AND DATEDIFF(DD, INPUT_DT, GETDATE()) = 0
 	]]>
 	</select>
 </mapper>

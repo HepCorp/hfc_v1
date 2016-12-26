@@ -3,6 +3,7 @@ package com.hep.hfc.comm;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ParamValidatChk {
@@ -42,7 +43,7 @@ public class ParamValidatChk {
 	public String getParam(String param){
 		if (isEmpty(param)==false){
 			param = param.trim();
-			param = Pattern.compile("\\s").matcher(param).replaceAll(""); //whitespace ����
+			param = Pattern.compile("\\s").matcher(param).replaceAll("");
 		}
 		return param;
 	}
@@ -73,6 +74,24 @@ public class ParamValidatChk {
 		String regex = "^\\d{1,"+ num +"}(.\\d{"+ dec +"})?$";
 		if (param.matches(regex)){
 			return true;
+		}
+		return false;
+	}
+	public boolean pattern(String gubun, String param){
+		String reg;
+		
+		switch (gubun) {
+		case "email": 
+			reg = "^[a-zA-Z0-9]+[@][a-zA-Z0-9]+[\\.][a-zA-Z0-9]+$";
+			break;
+		default :
+			reg = "";
+			break;
+		}
+
+		if (!isEmpty(reg)){
+			Boolean result = Pattern.matches(reg, param);
+			return result;
 		}
 		return false;
 	}

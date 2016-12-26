@@ -1,0 +1,137 @@
+/* mainWrap */
+
+body {
+    width: 100%;
+    height: 100vh;
+    background: url("/resources/images/index-bg2.png") no-repeat center;
+    background-size: cover;
+}
+
+/* //mainWrap */
+
+/* contents */
+
+section {
+    width: 100%;
+    height: calc(100vh - 50px);
+    margin: 0 auto;
+}
+
+.contents {
+    position: absolute;
+    width: 100%;
+    margin: -76px auto 0;
+    top: 50%;
+}
+
+
+.loginWrap {
+    width: 1024px;
+    height: 152px;
+    margin: 0 auto;
+}
+
+
+.hfc_logo {
+    width: 386px;
+    height: 152px;
+    float: left;
+    margin-left: 30px;
+}
+
+.hfc_logo img {
+    width: 386px;
+    height: 152px;
+}
+
+form {
+    width: 540px;
+    height: 150px;
+    float: right;
+    margin-right: 30px;
+}
+form input[type=email] {
+    width: 400px;
+    height: 70px;
+    line-height: 70px;
+    border: 3px solid #F4B93C;
+    box-sizing: border-box;
+    float: left;
+    margin-bottom: 10px;
+    font-size: 18px;
+    padding-left: 10px;
+}
+
+form input[type=password] {
+    width: 400px;
+    height: 70px;
+    line-height: 70px;
+    border: 3px solid #F4B93C;
+    box-sizing: border-box;
+    float: left;
+    font-size: 18px;
+    padding-left: 10px;
+}
+
+form input[type=submit] {
+    width: 130px;
+    height: 150px;
+    border: none;
+    background-color: #F4B93C;
+    float: right;
+    color: #FFFFFF;
+    font-size: 29px;
+    margin-top: -80px;
+}
+
+.textWrap {
+    width: 1024px;
+    height: 60px;
+    margin: 100px auto 0;
+}
+
+.textWrap img {
+    width: 100px;
+    height: 60px;
+    float: left;
+    margin-left: 320px;
+}
+
+.textWrap p {
+    height: 60px;
+    line-height: 60px;
+    font-size: 24px;
+    font-family: Consolas;
+    float: right;
+    margin-right: 320px;
+}
+
+
+/* //contents */
+
+footer {
+    width: 100%;
+    height: 50px;
+}
+
+.footerWrap {
+    width: 1024px;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.footerWrap img {
+    width: 25px;
+    height: 37px;
+    float: left;
+    margin-left: 370px;
+}
+
+.footerWrap p {
+    height: 50px;
+    line-height: 50px;
+    font-size: 12px;
+    float: right;
+    margin-right: 370px;
+}
+
