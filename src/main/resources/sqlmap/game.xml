@@ -39,6 +39,7 @@
 			 , A.ATTACH_TYPE
 			 , A.ATTACH_FILE
 			 , A.MONEY
+			 , C.PLAY_NO
 			 , C.USER_ANSWER
 		     , C.ANSWER_YN
 		  FROM HFC.HFC_QNA A
@@ -93,6 +94,50 @@
 	UPDATE HFC.HFC_MEMBER SET
 	       MONEY = MONEY - #{money}
 	 WHERE MEMBER_NO = #{member_no}
+	]]>
+	</update>
+	
+	<select id="playExistSelect" parameterType="playVO" resultType="int">
+	<![CDATA[
+		SELECT A.PLAY_NO
+		  FROM HFC.HFC_PLAY A
+		 WHERE A.STAGE_NO = #{stage_no}
+		   AND A.QNA_NO = #{qna_no}
+		   AND A.MEMBER_NO = #{member_no}
+		   AND A.ANSWER_YN = 0
+	]]>
+	</select>
+	
+	<update id="playUpdate" parameterType="playVO">
+	<![CDATA[
+		UPDATE HFC.HFC_PLAY SET
+		       USER_ANSWER = #{user_answer}
+		     , ANSWER_YN = #{answer_yn}
+		     , INPUT_DT = GETDATE()
+		 WHERE PLAY_NO = #{play_no}
+		   AND MEMBER_NO = #{member_no}
+	]]>
+	</update>
+	
+	<insert id="playInsert" parameterType="playVO" useGeneratedKeys="true" keyProperty="play_no">
+	<![CDATA[
+		INSERT INTO HFC.HFC_PLAY (STAGE_NO, QNA_NO, MEMBER_NO, USER_ANSWER, ANSWER_YN)
+		VALUES (#{stage_no}, #{qna_no}, #{member_no}, #{user_answer}, #{answer_yn})
+	]]>
+	</insert>
+	
+	<insert id="playLogInsert" parameterType="playVO">
+	<![CDATA[
+		INSERT INTO HFC.HFC_MONEY_LOG (REFERENCE_NO, TABLE_NM, MONEY, IP, INPUT_NO)
+		VALUES (#{play_no}, 'HFC_PLAY', #{money}, #{ip}, #{member_no})
+	]]>
+	</insert>
+	
+	<update id="playMemberUpdate" parameterType="playVO">
+	<![CDATA[
+		UPDATE HFC.HFC_MEMBER SET
+		       MONEY = MONEY + #{money}
+		 WHERE MEMBER_NO = #{member_no}
 	]]>
 	</update>
 </mapper>

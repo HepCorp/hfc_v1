@@ -55,7 +55,7 @@ function FormChkModule(f){
                	<c:set var="now" value="${0 }" />
                	<c:set var="nowPlay" value="" />
                	<c:set var="nowPlay_no" value="" />
-               	<c:forEach items="${stageList }" var="stage">${stage.user_answer }
+               	<c:forEach items="${stageList }" var="stage">
                		<%-- class 지정 --%>
                		<c:set var="clas" value="smallC" />
                		<c:set var="stat" value="" />
@@ -140,11 +140,15 @@ function FormChkModule(f){
                         <form name="saveFrm" method="post" action="<c:url value='/game/save.do' />" class="form" onSubmit="return FormChkModule(this);">
                         <fieldset>
                         <legend>답 제출</legend>
+                        	<input type="hidden" id="play_no" name="play_no" value="" />
                         	<input type="hidden" id="stage_no" name="stage_no" value="" />
                         	<input type="hidden" id="qna_no" name="qna_no" value="" />
                         	<input type="hidden" id="wrong_answer" name="wrong_answer" value="" />
+                        	<form:errors path="playVO.play_no" cssClass="msgAlert" cssStyle="display:none;" />
+                        	<form:errors path="playVO.qna_no" cssClass="msgAlert" cssStyle="display:none;" />
                             <label for="answer">
                                 <input type="text" name="user_answer" id="answer" maxlength="30" />
+                                <form:errors path="playVO.user_answer" cssClass="msgAlert" cssStyle="display:none;" />
                             </label>
                             <label for="send">
                                 <input type="submit" name="send" id="send" value="답 제출" />

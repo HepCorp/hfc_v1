@@ -7,6 +7,23 @@ public class PlayVO {
 	private int member_no;
 	private String user_answer;
 	private Boolean answer_yn;
+	private int money;
+	private String ip;
+	
+	
+	
+	public String getIp() {
+		return ip;
+	}
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+	public int getMoney() {
+		return money;
+	}
+	public void setMoney(int money) {
+		this.money = money;
+	}
 	public int getPlay_no() {
 		return play_no;
 	}

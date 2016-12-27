@@ -6,6 +6,7 @@
     	<typeAlias type="com.hep.hfc.game.StageVO" alias="stageVO" />
     	<typeAlias type="com.hep.hfc.game.QnaVO" alias="qnaVO" />
     	<typeAlias type="com.hep.hfc.game.HintVO" alias="hintVO" />
+    	<typeAlias type="com.hep.hfc.game.PlayVO" alias="playVO" />
     </typeAliases>
  
     <typeHandlers>

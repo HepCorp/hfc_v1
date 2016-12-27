@@ -108,7 +108,7 @@ aside.close { height:115px; padding-top:85px; }
 .questionBox { width: 400px; height: 70px; margin: 0 auto 10px;}
 .questionBox h3 { font-family: Arial, sans-serif; font-size: 48px; font-weight: 100; color: #BE912D; float: left;}
 .questionBox p { width: 350px; height: 70px; border: 2px solid #F4B93C; float: right; padding: 10px; box-sizing: border-box;}
-.hintBox { width: 400px; margin: 10px auto; }
+.hintBox { width: 400px; height:70px; margin: 10px auto; }
 .hintWrap { width: 350px; margin: 0 auto 10px; float: right;}
 .hintWrap label { height: 30px; display: block;}
 #hintBtn01 { display: inline-block; width: 150px; height: 30px; line-height: 30px; background-color: #F4B93C; border: 0; outline: none; cursor: pointer; float: right;}

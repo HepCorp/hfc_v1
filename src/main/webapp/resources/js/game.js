@@ -50,6 +50,7 @@ function toggleText(){
 
 function success(data){
 	$(".gameDetail h2").text("ROUND "+ data.qna.stage_nm);
+	$("#play_no").attr("value", data.qna.play_no);
 	$("#stage_no").attr("value", data.qna.stage_no);
 	$("#qna_no").attr("value", data.qna.qna_no);
 	$("#question p").text(data.qna.question);
@@ -102,7 +103,8 @@ function success(data){
 		hintHtml += "</div>";
 	}
 	$(".hintBox").html(hintHtml);
-	if (data.qna.answer_yn == false) {
+	console.log(data.qna.answer_yn);
+	if (data.qna.answer_yn == false || data.qna.answer_yn == null) {
 		$(".hintBox input[type='button']").click(function(){
 			var hint_no = $(this).attr("data");
 			if (confirm("힌트를 확인하시겠습니까? 해당 금액이 차감됩니다.")){
@@ -120,7 +122,7 @@ function success(data){
 function hintUse(hint_no){
 	$.getJSON('/game/hintView.do?no='+ hint_no, function(hintData){
 		if (hintData == null){
-			alert("이미 사용하였거, 존재하지 않습니다.");
+			alert("이미 사용하였거나, 존재하지 않습니다.");
 			return false;
 		} else {
 			var hintHtml = "<p>"+ hintData.seq +". "+ hintData.hint +"</p>";

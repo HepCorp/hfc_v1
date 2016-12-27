@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.hep.hfc.game.HintVO;
+import com.hep.hfc.game.PlayVO;
 import com.hep.hfc.game.QnaVO;
 import com.hep.hfc.game.StageVO;
 
@@ -31,5 +32,15 @@ public interface GameService {
 	public void hintLogInsert(HintVO vo);
 	
 	public void hintMemberUpdate(HintVO vo);
+	
+	public int playExistSelect(PlayVO vo);
+	
+	public void playUpdate(PlayVO vo);
+	
+	public int playInsert(PlayVO vo);
+	
+	public void playLogInsert(PlayVO vo);
+	
+	public void playMemberUpdate(PlayVO vo);
 
 }

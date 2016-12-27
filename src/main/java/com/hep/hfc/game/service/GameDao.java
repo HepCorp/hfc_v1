@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hep.hfc.game.HintVO;
+import com.hep.hfc.game.PlayVO;
 import com.hep.hfc.game.QnaVO;
 import com.hep.hfc.game.StageVO;
 
@@ -40,6 +41,26 @@ public class GameDao {
 
 	public void hintMemberUpdate(HintVO vo) {
 		session.update(namespace + "hintMemberUpdate", vo);
+	}
+	
+	public int playExistSelect(PlayVO vo){
+		return session.selectOne(namespace +"playExistSelect", vo);
+	}
+	
+	public void playUpdate(PlayVO vo){
+		session.update(namespace +"playUpdate", vo);
+	}
+	
+	public int playInsert(PlayVO vo){
+		return session.insert(namespace +"playInsert", vo);
+	}
+	
+	public void playLogInsert(PlayVO vo){
+		session.insert(namespace +"playLogInsert", vo);
+	}
+	
+	public void playMemberUpdate(PlayVO vo){
+		session.update(namespace +"playMemberUpdate", vo);
 	}
 
 }

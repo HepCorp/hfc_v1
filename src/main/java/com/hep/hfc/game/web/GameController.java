@@ -12,14 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hep.hfc.game.HintVO;
+import com.hep.hfc.game.PlayVO;
 import com.hep.hfc.game.QnaVO;
 import com.hep.hfc.game.service.GameService;
 import com.hep.hfc.member.MemberVO;
@@ -30,6 +34,9 @@ public class GameController {
 
 	@Resource(name="gameService")
 	GameService service;
+	
+	@Autowired
+	GameValidation gameVal;
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String main(){
@@ -81,7 +88,7 @@ public class GameController {
 		hint.setIp(request.getRemoteAddr());
 		hint.setMember_no(member.getMember_no());
 		
-		if (member.getMoney() > hint.getMoney()){
+		if (member.getMoney() >= hint.getMoney()){
 			//세션 머니 차감
 			member.setMoney(member.getMember_no() - hint.getMoney());
 			member.setIp(request.getRemoteAddr());
@@ -117,6 +124,43 @@ public class GameController {
                 ex.printStackTrace();
             }
         }
+	}
+	
+	@RequestMapping(value="/save.do", method=RequestMethod.POST)
+	private String save(
+			  @ModelAttribute("playVO") PlayVO playVO
+			, BindingResult result
+			, HttpSession session
+			, HttpServletRequest request
+			, ModelMap model){
+		MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+		int member_no = memberVO.getMember_no();
+		playVO.setMember_no(member_no);
+		playVO.setIp(request.getRemoteAddr());
+		gameVal.validate(playVO, result);
+		if (result.hasErrors()){
+			return "/game/index";
+		}
+		
+		if (playVO.getPlay_no() == 0) {
+			//play_no 없으면
+			int play_no = service.playInsert(playVO);
+			playVO.setPlay_no(play_no);
+		} else {
+			//play_no 있으면
+			service.playUpdate(playVO);
+		}
+		//세션 머니 변경
+		memberVO.setMoney(memberVO.getMember_no() + playVO.getMoney());
+		session.setAttribute("memberVO", memberVO);
+		
+		//로그 저장
+		service.playLogInsert(playVO);
+		
+		//멤버테이블 머니 변경
+		service.playMemberUpdate(playVO);
+		
+		return "redirect:/game/index.do";
 	}
 	
 }

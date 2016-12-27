@@ -42,8 +42,8 @@
 	
 	<insert id="logInsert" parameterType="memberVO">
 	<![CDATA[
-		INSERT INTO HFC.HFC_MONEY_LOG (REFERENCE_NO, TABLE_NM, MONEY, IP)
-		VALUES (#{member_no}, 'HFC_MEMBER', 1, #{ip})
+		INSERT INTO HFC.HFC_MONEY_LOG (REFERENCE_NO, TABLE_NM, MONEY, IP, INPUT_NO)
+		VALUES (#{member_no}, 'HFC_MEMBER', 1, #{ip}, #{member_no})
 	]]>
 	</insert>
 	

@@ -32,7 +32,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/index.do", method=RequestMethod.GET)
 	public String index(HttpSession session){
-		session.removeAttribute("userVO");
+		session.removeAttribute("memberVO");
 		session.invalidate();
 
 		return "/index";
@@ -65,7 +65,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/logout.do")
 	public String logout(HttpSession session){
-		session.removeAttribute("userVO");
+		session.removeAttribute("memberVO");
 		session.invalidate();
 
 		return "redirect:/index.do";

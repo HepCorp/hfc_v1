@@ -10,6 +10,7 @@ public class QnaVO {
 	private String attach_type;
 	private String attach_file;
 	private int money;
+	private int play_no;
 	private String user_answer;
 	private Boolean answer_yn;
 
@@ -37,6 +38,14 @@ public class QnaVO {
 		return "QnaVO [qna_no=" + qna_no + ", stage_no=" + stage_no + ", question=" + question + ", answer=" + answer
 				+ ", attach_type=" + attach_type + ", attach_file=" + attach_file + ", money=" + money
 				+ ", user_answer=" + user_answer + ", answer_yn=" + answer_yn + "]";
+	}
+
+	public int getPlay_no() {
+		return play_no;
+	}
+
+	public void setPlay_no(int play_no) {
+		this.play_no = play_no;
 	}
 
 	public String getStage_nm() {
