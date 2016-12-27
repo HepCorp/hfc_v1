@@ -28,9 +28,9 @@ header { width: 100%; height: 50px; background-color: #F4B93C;}
 .bigC a { color: #FFFFFF; font-size: 18px; font-family: Arial;}
 .smallC { width: 40px; height: 40px; line-height: 40px; border-radius: 40px; text-align: center; background-color: #CDCCCC;}
 .smallC a { color: #666666; font-size: 18px; font-family: Arial;}
-#itemStart {position: absolute; top: 50%; margin-top: -35px; left: 50%; margin-left: -35px;}
+#itemStart { position: absolute; width: 70px; height: 70px; line-height: 70px; text-align: center; top: 50%; margin-top: -35px; left: 50%; margin-left: -35px; background: url("/resources/images/start.png") no-repeat center;}
 
-#item1-1 { position: absolute; bottom: 210px; left: 54%; margin-left: -20px;}
+#item1-1 { position: absolute; bottom: 210px; left: 55%; margin-left: -20px;}
 #item1-2 { position: absolute; bottom: 120px; left: 59%; margin-left: -20px;}
 #item1-3 { position: absolute; bottom: 40px; right: 230px;}
 #item1-4 { position: absolute; bottom: 80px; right: 140px;}
@@ -62,16 +62,21 @@ header { width: 100%; height: 50px; background-color: #F4B93C;}
 #item4-6 { position: absolute; bottom: 40px; left: 230px;}
 #itemTest4 { position: absolute; bottom: 0; left: 50%; margin-left: -35px;}
 
-.stage p { height: 30px; line-height: 30px; font-size: 22px; color: #333333; font-family: Arial; font-weight: 600;}
-.stage p img { width: 20px; height: 30px; margin-right: 5px;}
 #basic { position: absolute; right: 145px; bottom: 220px;}
 #system { position: absolute; right: 180px; top: 185px;}
 #network { position: absolute; left: 114px; top: 236px;}
 #web { position: absolute; left: 195px; bottom: 177px;}
+
+.stage p { height: 30px; line-height: 30px; font-size: 22px; color: #333333; font-family: Arial; font-weight: 600;}
+.stage p img { width: 20px; height: 30px; margin-right: 5px;}
 .notUseHint { background-color: #16BAAE; color: #FFFFFF;}
-.useHint { background-color: #CDCCCC; color: #006A63;}
+.notUseHint a { color: #FFFFFF;}
+.useHint { background-color: #CDCCCC; color: #006A63}
+.useHint a { color: #006A63;}
 .wrong { background-color: #ED145B; color: #FFFFFF;}
-.nowPlay { width: 34px; height: 34px; line-height: 34px; background-color: #CDCCCC; color: black; border: 3px solid #FFFFFF; box-shadow: 0 1px 10px 2px rgba(254, 234, 0 , 1), inset 0 0 5px #000000;}
+.wrong a { color: #FFFFFF;}
+.nowPlay { background-color: #CDCCCC; color: #000000; border: 3px solid #FFFFFF; box-shadow: 0 1px 10px 2px rgba(254, 234, 0 , 1), inset 0 0 5px #000000;}
+.nowPlay a { color: #000000;}
 
 /* //gameWrap(윷놀이판) */
 
@@ -89,25 +94,27 @@ header { width: 100%; height: 50px; background-color: #F4B93C;}
 
 /* startBtn(슬라이드 show/hide 버튼) */
 
-aside { position: absolute; width: 100px; height: 130px; padding-top: 70px; text-align: center; border-radius: 100px 0 0 100px; background-color: #F4B93C; margin-right: 0; right: 0; top:50%; margin-top: -100px;}
-aside a { line-height: 25px; text-align: center; color: #FFFFFF; font-size: 24px;}
-
+aside { position: absolute; width: 100px; height: 130px; padding-top: 70px; text-align: center; border-radius: 100px 0 0 100px; background-color: #F4B93C; margin-right: 0; right: 0; top:50%; margin-top: -100px;  z-index:9999; line-height: 25px; color: #FFFFFF; font-size: 24px; cursor:pointer;}
+aside.open { height:130px; padding-top:70px;}
+aside.close { height:115px; padding-top:85px; }
 /* //startBtn(슬라이드 show/hide 버튼) */
 
 /* gameSlide */
 
 .gameSlide { position: absolute; width: 100%; height: calc(100vh - 50px); background-color: rgba(0, 0, 0, 0.5); top: 50px; display: none;}
-.game { position: absolute; width: 500px; height: calc(100vh - 50px); background-color: #FFFFFF; border-left: 3px solid #F4B93C; right: -503px;}
+.game { position: absolute; width: 500px; height: calc(100vh - 50px); background-color: #FFFFFF; border-left: 3px solid #F4B93C; right: -503px; }
 .gameDetail { position: absolute; width: 500px; height: 80%;}
 .gameDetail h2 { font-size: 40px; text-align: center; margin: 80px 0 30px 0;}
 .questionBox { width: 400px; height: 70px; margin: 0 auto 10px;}
 .questionBox h3 { font-family: Arial, sans-serif; font-size: 48px; font-weight: 100; color: #BE912D; float: left;}
 .questionBox p { width: 350px; height: 70px; border: 2px solid #F4B93C; float: right; padding: 10px; box-sizing: border-box;}
-.hintBox { width: 400px; height: 140px; margin: 0 auto;}
-#hintBtn01 { width: 150px; height: 30px; line-height: 30px; background-color: #F4B93C; border: 0; outline: none; cursor: pointer; float: right;}
-#hint01 { width: 350px; height: 30px; margin-bottom: 10px; background-color: #F4B93C; float: right;}
+.hintBox { width: 400px; margin: 10px auto; }
+.hintWrap { width: 350px; margin: 0 auto 10px; float: right;}
+.hintWrap label { height: 30px; display: block;}
+#hintBtn01 { display: inline-block; width: 150px; height: 30px; line-height: 30px; background-color: #F4B93C; border: 0; outline: none; cursor: pointer; float: right;}
+#hint01 { width: 350px; margin-bottom: 10px; box-sizing: border-box; background-color: #F4B93C; float: right; padding: 10px;}
 #hintBtn02 { width: 150px; height: 30px; line-height: 30px; background-color: #F4B93C; border: 0; outline: none; cursor: pointer; float: right;}
-#hint02 { width: 350px; height: 30px; margin-bottom: 10px; background-color: #F4B93C; float: right;}
+#hint02 { width: 350px; margin-bottom: 10px; box-sizing: border-box; background-color: #F4B93C; float: right; padding: 10px;}
 .answerBox { width: 400px; height: 70px; margin: 0 auto;}
 .answerBox h3 { font-family: Arial, sans-serif; font-size: 48px; font-weight: 100; color: #BE912D; float: left;}
 #answer { width: 350px; height: 70px; border: 2px solid #F4B93C; float: right; padding: 10px; box-sizing: border-box; margin-bottom: 10px;}

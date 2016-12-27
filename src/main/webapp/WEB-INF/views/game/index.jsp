@@ -9,6 +9,27 @@
 <%@ include file="/resources/include/header.jsp"%>
 <script type="text/javascript" charset="UTF-8" src="/resources/js/game.js"></script>
 <link type="text/css" rel="stylesheet" href="/resources/css/game.css">
+<script type="text/javascript">
+function FormChkModule(f){
+	if ((f.stage_no.value == "" || f.stage_no.value == 0) || 
+	    (f.qna_no.value == "" || f.qna_no.value == 0)){
+		alert("<spring:message code='field.error.path' />");
+		return false;
+	}
+	if (f.user_answer.value == "") {
+		alert("<spring:message code='field.required.user_answer' />");
+		f.user_answer.focus();
+		return false;
+	} 
+	if (f.wrong_answer.value == f.user_answer.value) {
+		alert("기존과 다른답을 입력해 주세요.");
+		f.user_answer.select();
+		f.user_answer.focus();
+		return false;
+	}
+	return true;
+}
+</script>
 </head>
 <body>
     <!-- header -->
@@ -30,70 +51,41 @@
             <article class="gameWrap">
                 <div class="stage">
                	<c:if test="${stageList != null }">
-               		<div id="itemStart" class="bigC"><a href="">START</a></div>
+               		<div id="itemStart">START</div>
                	<c:set var="now" value="${0 }" />
                	<c:set var="nowPlay" value="" />
-               	<c:forEach items="${stageList }" var="stage">
-               		<!-- class 지정 -->
+               	<c:set var="nowPlay_no" value="" />
+               	<c:forEach items="${stageList }" var="stage">${stage.user_answer }
+               		<%-- class 지정 --%>
                		<c:set var="clas" value="smallC" />
                		<c:set var="stat" value="" />
-               		<c:choose>
+               		<c:choose>         
                			<c:when test="${stage.qna_no == 0 }"><c:set var="stat" value="" /></c:when>
-               			<c:when test="${stage.qna_no != 0 && stage.answer_yn == true }">
+               			<c:when test="${stage.qna_no != 0 && stage.user_answer != null && stage.answer_yn == true }">
 	               			<c:if test="${stage.hint_log_cnt > 0 }"><c:set var="stat" value="useHint" /></c:if>
 	               			<c:if test="${stage.hint_log_cnt == 0}"><c:set var="stat" value="notUseHint" /></c:if>
                			</c:when>
-               			<c:when test="${stage.qna_no != 0 && stage.answer_yn == false && now == 0 }">
+               			<c:when test="${stage.qna_no != 0 && stage.user_answer != null && stage.answer_yn == false }">
+               				<c:set var="stat" value="wrong" />
+               			</c:when>
+               			<c:when test="${stage.qna_no != 0 && stage.user_answer == null && now == 0 }">
                				<c:set var="stat" value="nowPlay" />
 	               			<c:set var="now" value="${now + 1 }" />
 	               			<c:set var="nowPlay" value="${stage.stage_nm }" />
+	               			<c:set var="nowPlay_no" value="${stage.qna_no }" />
                			</c:when>
                		</c:choose>
                		
                		<c:if test="${fn:startsWith(stage.stage_nm, 'Test')}">
                			<c:set var="clas" value="bigC"></c:set>
                		</c:if>
-               		<!-- //class 지정 -->
-               		
+               		<%-- //class 지정 --%>               		
                		<div id="item${stage.stage_nm }" class="${clas } ${stat }">
-               		<c:if test="${stage.qna_no != 0 }">
-               			<a href="">${stage.stage_nm }</a>
-               		</c:if>
-               		<c:if test="${stage.qna_no == 0 }">
-               			${stage.stage_nm }
-               		</c:if>	
+	               		<c:if test="${stage.qna_no != 0 }"><a href="" data="${stage.qna_no }">${stage.stage_nm }</a></c:if>
+	               		<c:if test="${stage.qna_no == 0 }">${stage.stage_nm }</c:if>
                		</div>
                	</c:forEach>
                	</c:if>
-                    <!-- <div id="itemStart" class="bigC"><a href="">START</a></div>
-                    <div id="item1-1" class="smallC"><a href="">1-1</a></div>
-                    <div id="item1-2" class="smallC"><a href="">1-2</a></div>
-                    <div id="item1-3" class="smallC"><a href="">1-3</a></div>
-                    <div id="item1-4" class="smallC"><a href="">1-4</a></div>
-                    <div id="itemTest1" class="bigC"><a href="">TEST1</a></div>
-                    <div id="item2-1" class="smallC"><a href="">2-1</a></div>
-                    <div id="item2-2" class="smallC"><a href="">2-2</a></div>
-                    <div id="item2-3" class="smallC"><a href="">2-3</a></div>
-                    <div id="item2-4" class="smallC"><a href="">2-4</a></div>
-                    <div id="itemTest2" class="bigC"><a href="">TEST2</a></div>
-                    <div id="item3-1" class="smallC"><a href="">3-1</a></div>
-                    <div id="item3-2" class="smallC"><a href="">3-2</a></div>
-                    <div id="item3-3" class="smallC"><a href="">3-3</a></div>
-                    <div id="item3-4" class="smallC"><a href="">3-4</a></div>
-                    <div id="itemTest3" class="bigC"><a href="">TEST3</a></div>
-                    <div id="item4-1" class="smallC"><a href="">4-1</a></div>
-                    <div id="item4-2" class="smallC"><a href="">4-2</a></div>
-                    <div id="item4-3" class="smallC"><a href="">4-3</a></div>
-                    <div id="item4-4" class="smallC"><a href="">4-4</a></div>
-                    <div id="itemTest4" class="bigC"><a href="">TEST4</a></div>
-                    <div id="item5-1" class="smallC"><a href="">5-1</a></div>
-                    <div id="item5-2" class="smallC"><a href="">5-2</a></div>
-                    <div id="item6-1" class="smallC"><a href="">6-1</a></div>
-                    <div id="item6-2" class="smallC"><a href="">6-2</a></div>
-                    <div id="item7-1" class="smallC"><a href="">7-1</a></div>
-                    <div id="item7-2" class="smallC"><a href="">7-2</a></div>
-                    <div id="item8-1" class="smallC"><a href="">8-1</a></div>
-                    <div id="item8-2" class="smallC"><a href="">8-2</a></div> -->
                     <p id="basic"><img src="/resources/images/yut-one.png" alt="윷 한개 이미지">BASIC</p>
                     <p id="system"><img src="/resources/images/yut-one.png" alt="윷 한개 이미지">SYSTEM</p>
                     <p id="network"><img src="/resources/images/yut-one.png" alt="윷 한개 이미지">NETWORK</p>
@@ -124,8 +116,8 @@
             <!-- //categoryBox(범주) -->
         </div>
         <!-- startBtn(슬라이드 show/hide 버튼) -->
-        <aside>
-            <a href="">${nowPlay }<br>START</a>
+        <aside class="open" data="${nowPlay_no }">
+            ${nowPlay }<br>START
         </aside>
         <!-- //startBtn(슬라이드 show/hide 버튼) -->
 
@@ -142,45 +134,22 @@
                             </p>
                         </div>
                     </article>
-                    <article class="hintBox">
-                        <form>
-                            <fieldset>
-                                <legend>힌트 버튼 1</legend>
-                                <label for="hintBtn01">
-                                    <input type="button" id="hintBtn01" value="힌트1 사용 3냥 CLICK!">
-                                </label>
-                            </fieldset>
-                        </form>
-                        <div id="hint01">
-                            <p>1. Vivamus luctus lectus quis molestie pretium.</p>
-                        </div>
-                        <form>
-                            <fieldset>
-                                <legend>힌트 버튼 2</legend>
-                                <label for="hintBtn02">
-                                    <input type="button" id="hintBtn02" value="힌트2 사용 3냥 CLICK!">
-                                </label>
-                            </fieldset>
-                        </form>
-                        <div id="hint02">
-                            <p>2. Donec dignissim libero et ex laoreet auctor.</p>
-                        </div>
-                    </article>
+                    <article class="hintBox"></article>
                     <article class="answerBox">
                         <h3>A</h3>
-                        <form>
-                            <fieldset>
-                                <legend>답</legend>
-                                <label for="answer">
-                                    <textarea name="answer" id="answer" cols="30" rows="3"></textarea>
-                                </label>
-                            </fieldset>
-                            <fieldset>
-                                <legend>답 제출</legend>
-                                <label for="send">
-                                    <input type="submit" name="send" id="send" value="답 제출" onclick="">
-                                </label>
-                            </fieldset>
+                        <form name="saveFrm" method="post" action="<c:url value='/game/save.do' />" class="form" onSubmit="return FormChkModule(this);">
+                        <fieldset>
+                        <legend>답 제출</legend>
+                        	<input type="hidden" id="stage_no" name="stage_no" value="" />
+                        	<input type="hidden" id="qna_no" name="qna_no" value="" />
+                        	<input type="hidden" id="wrong_answer" name="wrong_answer" value="" />
+                            <label for="answer">
+                                <input type="text" name="user_answer" id="answer" maxlength="30" />
+                            </label>
+                            <label for="send">
+                                <input type="submit" name="send" id="send" value="답 제출" />
+                            </label>
+                        </fieldset>
                         </form>
                     </article>
 
@@ -189,14 +158,9 @@
                     <div id="fileBtn">
                         <div id="downDetail">
                             <span>attach.txt</span>
-                            <form>
-                                <fieldset>
-                                    <legend>파일 다운로드</legend>
-                                    <label for="download">
-                                        <input type="button" name="download" id="download" value="Download">
-                                    </label>
-                                </fieldset>
-                            </form>
+                            <label for="download">
+                                <input type="button" name="download" id="download" value="Download">
+                            </label>
                         </div>
                     </div>
                 </article>

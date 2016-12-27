@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="gameMapper">
-
+    
 	<select id="stageSelectAll" parameterType="int" resultType="stageVO">
 	<![CDATA[
 		SELECT A.STAGE_NO
@@ -9,6 +9,7 @@
 			 , B.QNA_NO
 			 , (CASE WHEN B.QNA_NO IS NOT NULL THEN ISNULL(C.HINT_CNT, 0) ELSE C.HINT_CNT END) HINT_CNT
 			 , (CASE WHEN B.QNA_NO IS NOT NULL THEN ISNULL(C.HINT_LOG_CNT, 0) ELSE C.HINT_LOG_CNT END) HINT_LOG_CNT
+			 , Z.USER_ANSWER
 			 , Z.ANSWER_YN
 		  FROM HFC.HFC_STAGE A
 		       LEFT OUTER JOIN HFC.HFC_QNA B ON (A.STAGE_NO = B.STAGE_NO AND B.DEL_YN = 0)
@@ -27,4 +28,71 @@
 		 ORDER BY A.SEQ
 	]]>
 	</select>
+	
+	<select id="qnaSelect" parameterType="hashMap" resultType="qnaVO">
+	<![CDATA[
+		SELECT A.QNA_NO
+		     , B.STAGE_NO
+			 , B.STAGE_NM
+		     , A.QUESTION
+			 , A.ANSWER
+			 , A.ATTACH_TYPE
+			 , A.ATTACH_FILE
+			 , A.MONEY
+			 , C.USER_ANSWER
+		     , C.ANSWER_YN
+		  FROM HFC.HFC_QNA A
+			   LEFT OUTER JOIN HFC.HFC_STAGE B ON (A.STAGE_NO = B.STAGE_NO AND B.DEL_YN = 0)
+		       LEFT OUTER JOIN HFC.HFC_PLAY C ON (A.QNA_NO = C.QNA_NO AND C.MEMBER_NO = #{member_no})
+		 WHERE A.DEL_YN = 0
+		   AND A.QNA_NO = #{qna_no}
+		 ORDER BY B.SEQ	
+	]]>
+	</select>
+	
+	<select id="hintSelectAll" parameterType="hashMap" resultType="hintVO">
+	<![CDATA[
+		SELECT A.HINT_NO
+		     , A.SEQ
+		     , A.HINT
+			 , A.MONEY
+			 , B.LOG_NO
+		  FROM HFC.HFC_HINT A
+			   LEFT OUTER JOIN HFC.HFC_MONEY_LOG B ON (A.HINT_NO = B.REFERENCE_NO AND B.TABLE_NM = 'HFC_HINT' AND B.INPUT_NO = #{member_no})
+		 WHERE A.QNA_NO = #{qna_no}
+		   AND A.DEL_YN = 0
+		 ORDER BY A.SEQ
+	]]>
+	</select>
+	
+	<select id="hintSelect" parameterType="hashMap" resultType="hintVO">
+	<![CDATA[
+		SELECT A.HINT_NO
+		     , A.SEQ
+		     , A.HINT
+			 , A.MONEY
+			 , B.LOG_NO
+		  FROM HFC.HFC_HINT A
+		       LEFT OUTER JOIN HFC.HFC_MONEY_LOG B ON (A.HINT_NO = B.REFERENCE_NO AND B.TABLE_NM = 'HFC_HINT' AND B.INPUT_NO = #{member_no})
+		 WHERE A.HINT_NO = #{hint_no}
+		   AND A.DEL_YN = 0
+		   AND B.LOG_NO IS NULL
+		 ORDER BY HINT_NO	
+	]]>
+	</select>
+	
+	<insert id="hintLogInsert" parameterType="hintVO">
+	<![CDATA[
+	INSERT INTO HFC.HFC_MONEY_LOG (REFERENCE_NO, TABLE_NM, MONEY, IP, INPUT_NO)
+	VALUES (#{hint_no}, 'HFC_HINT', -#{money}, #{ip}, #{member_no})
+	]]>
+	</insert>
+	
+	<update id="hintMemberUpdate" parameterType="hintVO">
+	<![CDATA[
+	UPDATE HFC.HFC_MEMBER SET
+	       MONEY = MONEY - #{money}
+	 WHERE MEMBER_NO = #{member_no}
+	]]>
+	</update>
 </mapper>

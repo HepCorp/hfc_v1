@@ -4,6 +4,8 @@
     <typeAliases>
     	<typeAlias type="com.hep.hfc.member.MemberVO" alias="memberVO" />
     	<typeAlias type="com.hep.hfc.game.StageVO" alias="stageVO" />
+    	<typeAlias type="com.hep.hfc.game.QnaVO" alias="qnaVO" />
+    	<typeAlias type="com.hep.hfc.game.HintVO" alias="hintVO" />
     </typeAliases>
  
     <typeHandlers>

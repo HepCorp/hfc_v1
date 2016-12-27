@@ -7,6 +7,7 @@ public class StageVO {
 	private int qna_no;
 	private int hint_cnt;
 	private int hint_log_cnt;
+	private String user_answer;
 	private boolean answer_yn;
 
 	public StageVO() {
@@ -22,6 +23,14 @@ public class StageVO {
 		this.hint_cnt = hint_cnt;
 		this.hint_log_cnt = hint_log_cnt;
 		this.answer_yn = answer_yn;
+	}
+
+	public String getUser_answer() {
+		return user_answer;
+	}
+
+	public void setUser_answer(String user_answer) {
+		this.user_answer = user_answer;
 	}
 
 	public int getStage_no() {
