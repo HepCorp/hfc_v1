@@ -1,4 +1,8 @@
 $(function(){
+	$(".msgAlert").each(function(){
+		alert($(this).text());
+		$("input:first").focus();
+	});
 	$("aside").click(function(){
 		var display = $(".gameSlide").css("display");
 		if (display == "none") {
