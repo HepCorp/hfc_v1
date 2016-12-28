@@ -56,7 +56,7 @@ public class GameController {
 		return memberVO.getMember_no();
 	}
 	
-	@RequestMapping(value="/view.do", method=RequestMethod.GET)
+	@RequestMapping(value="/view.do", method=RequestMethod.POST)
 	private @ResponseBody HashMap<String, Object> qnaView(
 			  @RequestParam(value="no", required=true) int qna_no
 			, HttpSession session){
@@ -74,7 +74,7 @@ public class GameController {
 		return voMap;
 	}
 	
-	@RequestMapping(value="/hintView.do", method=RequestMethod.GET)
+	@RequestMapping(value="/hintView.do", method=RequestMethod.POST)
 	private @ResponseBody HintVO hintView(
 			  @RequestParam(value="no", required=true) int hint_no
 			, HttpSession session
@@ -90,7 +90,7 @@ public class GameController {
 		
 		if (member.getMoney() >= hint.getMoney()){
 			//세션 머니 차감
-			member.setMoney(member.getMember_no() - hint.getMoney());
+			member.setMoney(member.getMoney() - hint.getMoney());
 			member.setIp(request.getRemoteAddr());
 			session.setAttribute("memberVO", member);
 			//로그 저장
@@ -151,7 +151,7 @@ public class GameController {
 			service.playUpdate(playVO);
 		}
 		//세션 머니 변경
-		memberVO.setMoney(memberVO.getMember_no() + playVO.getMoney());
+		memberVO.setMoney(memberVO.getMoney() + playVO.getMoney());
 		session.setAttribute("memberVO", memberVO);
 		
 		//로그 저장

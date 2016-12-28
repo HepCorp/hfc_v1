@@ -16,8 +16,15 @@ $(function(){
 
 function openGame(qna_no){
 	$(".gameSlide").show();
-	$.getJSON('/game/view.do?no='+ qna_no, function(qnaData){
-		success(qnaData);
+	$.ajax({
+		url: "/game/view.do",
+		method: "POST",
+		data: {"no":qna_no},
+		dataType: "json",
+		success : function(qnaData){
+			success(qnaData);
+		},
+		error : function(){alert("실패했습니다.") },
 	});
 	
 	$("aside").animate({"right":"+=503"});
@@ -120,18 +127,25 @@ function success(data){
 }
 
 function hintUse(hint_no){
-	$.getJSON('/game/hintView.do?no='+ hint_no, function(hintData){
-		if (hintData == null){
-			alert("이미 사용하였거나, 존재하지 않습니다.");
-			return false;
-		} else {
-			var hintHtml = "<p>"+ hintData.seq +". "+ hintData.hint +"</p>";
-			var input = $("#hintBtn0"+ hintData.seq);
-			var obj = $("#hint0"+ hintData.seq);
-			input.attr("disabled", "disabled");
-			input.val("힌트"+ hintData.seq);
-			obj.html(hintHtml);
-			obj.show();
-		}
+	$.ajax({
+		url: "/game/hintView.do",
+		method: "POST",
+		data: {"no":hint_no},
+		dataType: "json",
+		success : function(hintData){
+			if (hintData == null){
+				alert("이미 사용하였거나, 존재하지 않습니다.");
+				return false;
+			} else {
+				var hintHtml = "<p>"+ hintData.seq +". "+ hintData.hint +"</p>";
+				var input = $("#hintBtn0"+ hintData.seq);
+				var obj = $("#hint0"+ hintData.seq);
+				input.attr("disabled", "disabled");
+				input.val("힌트"+ hintData.seq);
+				obj.html(hintHtml);
+				obj.show();
+			}
+		},
+		error : function(){alert("실패했습니다.") },
 	});
 }
