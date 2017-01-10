@@ -15,7 +15,7 @@
 	
 	<bean id="dataSourceSQLServer" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
-		<property name="url" value="${jdbc.test.url}" />
+		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
 	</bean>

@@ -134,6 +134,16 @@ function FormChkModule(f){
                             </p>
                         </div>
                     </article>
+	                <article class="fileDown">
+	                    <div id="fileBtn">
+	                        <div id="downDetail">
+	                            <span>attach.txt</span>
+	                            <label for="download">
+	                                <input type="button" name="download" id="download" value="Download">
+	                            </label>
+	                        </div>
+	                    </div>
+	                </article>
                     <article class="hintBox"></article>
                     <article class="answerBox">
                         <h3>A</h3>
@@ -158,16 +168,6 @@ function FormChkModule(f){
                     </article>
 
                 </div>
-                <article class="fileDown">
-                    <div id="fileBtn">
-                        <div id="downDetail">
-                            <span>attach.txt</span>
-                            <label for="download">
-                                <input type="button" name="download" id="download" value="Download">
-                            </label>
-                        </div>
-                    </div>
-                </article>
             </section>
         </article>
         <!-- //gameSlide -->

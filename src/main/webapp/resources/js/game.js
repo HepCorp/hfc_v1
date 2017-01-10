@@ -79,17 +79,19 @@ function success(data){
 		$("#send").show();
 	}
 	$("#downDetail span").text(data.qna.attach_file);
+	var url;
 	if (data.qna.attach_type == 'F'){
 		$("#download").val("Download");
-		$("#download").click(function(){
-	        location.href="/game/downloadFile.do?file="+ data.qna.attach_file;
-		});
+		url = "/game/downloadFile.do?file="+ data.qna.attach_file;
 	} else {
 		$("#download").val("Click");
-		$("#download").click(function(){
-			window.open("/resources/download/"+ data.qna.attach_file);
-		})
+		url = "/resources/download/"+ data.qna.attach_file;
 	}
+	$("#download").unbind("click");
+	$("#download").click(function(){
+		window.open(url);
+		return false;
+	});
 	var hintHtml = "";
 	if (data.hint.length == 0){
 		$(".hintBox").hide();
@@ -114,7 +116,6 @@ function success(data){
 		hintHtml += "</div>";
 	}
 	$(".hintBox").html(hintHtml);
-	console.log(data.qna.answer_yn);
 	if (data.qna.answer_yn == false || data.qna.answer_yn == null) {
 		$(".hintBox input[type='button']").click(function(){
 			var hint_no = $(this).attr("data");

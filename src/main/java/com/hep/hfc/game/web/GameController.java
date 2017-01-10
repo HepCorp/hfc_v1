@@ -1,6 +1,7 @@
 package com.hep.hfc.game.web;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -44,7 +45,9 @@ public class GameController {
 	}
 	
 	@RequestMapping(value="/index.do", method=RequestMethod.GET)
-	public String index(HttpSession session, ModelMap model){
+	public String index(
+			  HttpSession session
+			, ModelMap model){
 		int member_no = getMember_no(session);
 		
 		model.addAttribute("stageList", service.stageSelectAll(member_no));
