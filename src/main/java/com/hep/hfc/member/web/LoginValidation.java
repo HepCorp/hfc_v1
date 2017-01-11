@@ -1,7 +1,6 @@
 package com.hep.hfc.member.web;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
