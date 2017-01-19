@@ -29,4 +29,5 @@ public class MemberDao {
 	public int logExists(int member_no){
 		return session.selectOne(namespace +"logExists", member_no);
 	}
+
 }
